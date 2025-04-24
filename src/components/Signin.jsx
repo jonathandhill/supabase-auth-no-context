@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import { UserAuth } from '../context/AuthContext';
 
-const Signin = ({ setCurrentPage }) => {
+const Signin = ({ setCurrentPage, signInUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  const { signInUser } = UserAuth();
 
   const handleSignIn = async (e) => {
     e.preventDefault();

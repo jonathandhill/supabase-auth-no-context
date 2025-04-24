@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import { UserAuth } from '../context/AuthContext';
 
-const Signup = ({ setCurrentPage }) => {
+const Signup = ({ setCurrentPage, signUpNewUser, signInUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  const { signUpNewUser, signInUser } = UserAuth();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -17,7 +14,7 @@ const Signup = ({ setCurrentPage }) => {
       const result = await signUpNewUser(email, password);
 
       if (result.success) {
-        // After successful signup, try to sign in using the context function
+        // After successful signup, try to sign in using the provided function
         const signInResult = await signInUser(email, password);
 
         if (!signInResult.success) {
