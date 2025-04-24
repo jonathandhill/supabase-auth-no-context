@@ -1,14 +1,51 @@
 import React, { useState } from 'react';
+import { supabase } from '../supabaseClient';
 
-const Signup = ({ setCurrentPage, signUpNewUser, signInUser }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Signup = ({ setCurrentPage }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
+  const signUpNewUser = async (email, password) => {
+    const { data, error } = await supabase.auth.signUp({
+      email: email.toLowerCase(),
+      password: password,
+    });
+
+    if (error) {
+      console.error('Error signing up: ', error);
+      return { success: false, error };
+    }
+
+    return { success: true, data };
+  };
+
+  const signInUser = async (email, password) => {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.toLowerCase(),
+        password: password,
+      });
+
+      if (error) {
+        console.error('Sign-in error:', error.message);
+        return { success: false, error: error.message };
+      }
+
+      console.log('Sign-in success:', data);
+      return { success: true, data };
+    } catch (error) {
+      console.error('Unexpected error during sign-in:', error.message);
+      return {
+        success: false,
+        error: 'An unexpected error occurred. Please try again.',
+      };
+    }
+  };
+
+  const handleSignUp = async (formData) => {
     setLoading(true);
+    const email = formData.get('email');
+    const password = formData.get('password');
 
     try {
       const result = await signUpNewUser(email, password);
@@ -32,43 +69,39 @@ const Signup = ({ setCurrentPage, signUpNewUser, signInUser }) => {
   };
 
   return (
-    <div className="form-container">
-      <form onSubmit={handleSignUp}>
-        <h2 className="form-title">Sign up today!</h2>
-        <p>
-          Already have an account?{' '}
-          <span onClick={() => setCurrentPage('signin')} className="form-link">
-            Sign in
-          </span>
-        </p>
-        <div className="form-group">
-          {/* <label htmlFor="Email">Email</label> */}
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            className="form-input"
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email"
-          />
-        </div>
-        <div className="form-group">
-          {/* <label htmlFor="Password">Password</label> */}
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            className="form-input"
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Password"
-          />
-        </div>
-        <button type="submit" disabled={loading} className="form-button">
-          Sign Up
-        </button>
-        {error && <p className="error-message">{error}</p>}
-      </form>
-    </div>
+    <form action={handleSignUp}>
+      <h2 className="form-title">Sign up today!</h2>
+      <p>
+        Already have an account?{' '}
+        <span onClick={() => setCurrentPage('signin')} className="form-link">
+          Sign in
+        </span>
+      </p>
+      <div className="form-group">
+        <input
+          className="form-input"
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Email"
+          required
+        />
+      </div>
+      <div className="form-group">
+        <input
+          className="form-input"
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          required
+        />
+      </div>
+      <button type="submit" disabled={loading} className="form-button">
+        Sign Up
+      </button>
+      {error && <p className="error-message">{error}</p>}
+    </form>
   );
 };
 

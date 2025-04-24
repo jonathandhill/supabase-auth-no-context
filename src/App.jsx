@@ -20,45 +20,6 @@ function App() {
     });
   }, []);
 
-  // Sign up function
-  const signUpNewUser = async (email, password) => {
-    const { data, error } = await supabase.auth.signUp({
-      email: email.toLowerCase(),
-      password: password,
-    });
-
-    if (error) {
-      console.error('Error signing up: ', error);
-      return { success: false, error };
-    }
-
-    return { success: true, data };
-  };
-
-  // Sign in function
-  const signInUser = async (email, password) => {
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email.toLowerCase(),
-        password: password,
-      });
-
-      if (error) {
-        console.error('Sign-in error:', error.message);
-        return { success: false, error: error.message };
-      }
-
-      console.log('Sign-in success:', data);
-      return { success: true, data };
-    } catch (error) {
-      console.error('Unexpected error during sign-in:', error.message);
-      return {
-        success: false,
-        error: 'An unexpected error occurred. Please try again.',
-      };
-    }
-  };
-
   // Sign out function
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -69,17 +30,21 @@ function App() {
 
   const renderPage = () => {
     if (!session) {
-      if (currentPage === 'signin') {
-        return (
-          <Signin setCurrentPage={setCurrentPage} signInUser={signInUser} />
-        );
-      }
       return (
-        <Signup
-          setCurrentPage={setCurrentPage}
-          signUpNewUser={signUpNewUser}
-          signInUser={signInUser}
-        />
+        <div
+          className="form-container"
+          style={{
+            border: '1px solid #ccc',
+            padding: '2rem',
+            borderRadius: '8px',
+          }}
+        >
+          {currentPage === 'signin' ? (
+            <Signin setCurrentPage={setCurrentPage} />
+          ) : (
+            <Signup setCurrentPage={setCurrentPage} />
+          )}
+        </div>
       );
     }
     return (
@@ -93,7 +58,7 @@ function App() {
 
   return (
     <div>
-      <h1 className="app-header">Supabase Auth</h1>
+      <h1 className="app-header">Dunder Mifflin</h1>
       {renderPage()}
     </div>
   );
