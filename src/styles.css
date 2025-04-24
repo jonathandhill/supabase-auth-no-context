@@ -1,0 +1,127 @@
+/* Base styles */
+:root {
+  --primary-color: #646cff;
+  --primary-hover: #535bf2;
+  --text-color: black;
+  --background-color: white;
+  --error-color: #ff4444;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+/* Form styles */
+.form-container {
+  max-width: 28rem;
+  margin: 0 auto;
+  padding-top: 6rem;
+}
+
+.form-title {
+  font-weight: bold;
+  padding-bottom: 0.5rem;
+}
+
+.form-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form-link:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+}
+
+.form-input {
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  color: white;
+  transition: border-color 0.25s;
+}
+
+.form-input:focus {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.form-button {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.6em 1.2em;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #124F33;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: rgb(255, 255, 255);
+}
+
+.form-button:hover {
+  background-color: #187c49;
+}
+
+.form-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: var(--error-color);
+  text-align: center;
+  padding-top: 1rem;
+}
+
+/* Dashboard styles */
+.dashboard-container {
+  padding: 2rem;
+}
+
+.dashboard-title {
+  font-size: 2em;
+  line-height: 1.1;
+}
+
+.dashboard-welcome {
+  margin: 1rem 0;
+}
+
+.signout-button {
+  display: inline-block;
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+  border: 1px solid;
+  cursor: pointer;
+}
+
+.signout-button:hover {
+  border-color: var(--primary-color);
+}
+
+/* App header */
+.app-header {
+  text-align: center;
+  font-size: 3.2em;
+  line-height: 1.1;
+  padding-top: 1rem;
+}
