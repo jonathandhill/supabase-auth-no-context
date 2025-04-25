@@ -58,7 +58,7 @@ function App() {
 
   return (
     <div>
-      <h1 className="app-header">Dunder Mifflin</h1>
+      <h1 className="app-header">Paper Like A Boss</h1>
       {renderPage()}
     </div>
   );
